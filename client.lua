@@ -102,7 +102,7 @@ local function next_ped(drugToSell)
         npc = {}
     end
 
-    local cops = lib.callback.await('stasiek_selldrugsv2:getPoliceCount', false)
+    local cops = lib.callback.await('ghostdevelopments:getPoliceCount', false)
 
     if cops < Config.requiredCops then
         lib.notify({
@@ -279,7 +279,7 @@ local function next_ped(drugToSell)
                             })
                             PlayAmbientSpeech1(npc.ped, 'GENERIC_HI', 'SPEECH_PARAMS_STANDARD')
                             drugToSell.coords = playerCoords
-                            TriggerServerEvent('stasiek_selldrugsv2:notifycops', drugToSell)
+                            TriggerServerEvent('ghostdevelopments:notifycops', drugToSell)
                             SetPedAsNoLongerNeeded(npc.ped)
                             if Config.npcFightOnReject then
                                 TaskCombatPed(npc.ped, PlayerPedId(), 0, 16)
@@ -319,7 +319,7 @@ local function next_ped(drugToSell)
                         if alert <= 23 then
                             PlayAmbientSpeech1(npc.ped, 'GENERIC_HI', 'SPEECH_PARAMS_STANDARD')
                             drugToSell.coords = playerCoords
-                            TriggerServerEvent('stasiek_selldrugsv2:notifycops', drugToSell)
+                            TriggerServerEvent('ghostdevelopments:notifycops', drugToSell)
                         end
 
                         AttachEntityToEntity(obj2, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 57005), 0.13, 0.02, 0.0, -90.0, 0, 0, 1, 1, 0, 1, 0, 1)
@@ -330,7 +330,7 @@ local function next_ped(drugToSell)
                         DeleteEntity(obj2)
                         PlayAmbientSpeech1(npc.ped, 'GENERIC_THANKS', 'SPEECH_PARAMS_STANDARD')
                         SetPedAsNoLongerNeeded(npc.ped)
-                        TriggerServerEvent('stasiek_selldrugsv2:pay', drugToSell)
+                        TriggerServerEvent('ghostdevelopments:pay', drugToSell)
 
                         lib.notify({
                             title = Config.notify.title,
@@ -363,11 +363,11 @@ CreateThread(function()
     end
 end)
 
-RegisterNetEvent('stasiek_selldrugsv2:findClient')
-AddEventHandler('stasiek_selldrugsv2:findClient', next_ped)
+RegisterNetEvent('ghostdevelopments:findClient')
+AddEventHandler('ghostdevelopments:findClient', next_ped)
 
-RegisterNetEvent('stasiek_selldrugsv2:notifyPolice')
-AddEventHandler('stasiek_selldrugsv2:notifyPolice', function(coords)
+RegisterNetEvent('ghostdevelopments:notifyPolice')
+AddEventHandler('ghostdevelopments:notifyPolice', function(coords)
     if PlayerData.job and PlayerData.job.name == 'police' then
         local streetHash = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
         local streetName = GetStreetNameFromHashKey(streetHash)
