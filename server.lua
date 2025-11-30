@@ -29,7 +29,7 @@ RegisterCommand('dealer', function(source)
                 count = sellCount,
                 price = price
             }
-            TriggerClientEvent('stasiek_selldrugsv2:findClient', source, drugToSell)
+            TriggerClientEvent('ghostdevelopments:findClient', source, drugToSell)
             return
         end
     end
@@ -37,19 +37,19 @@ RegisterCommand('dealer', function(source)
     TriggerClientEvent('ox_lib:notify', source, {title = 'Drugs', description = Config.notify.nodrugs, duration = 8000, position = 'center-right', icon = 'pills'})
 end, false)
 
-RegisterServerEvent('stasiek_selldrugsv2:pay')
-AddEventHandler('stasiek_selldrugsv2:pay', function(drugToSell)
+RegisterServerEvent('ghostdevelopments:pay')
+AddEventHandler('ghostdevelopments:pay', function(drugToSell)
     local Player = QBCore.Functions.GetPlayer(source)
     Player.Functions.RemoveItem(drugToSell.type, drugToSell.count)
     Player.Functions.AddItem(Config.account, drugToSell.price)
 end)
 
-RegisterServerEvent('stasiek_selldrugsv2:notifycops')
-AddEventHandler('stasiek_selldrugsv2:notifycops', function(drugToSell)
-    TriggerClientEvent('stasiek_selldrugsv2:notifyPolice', -1, drugToSell.coords)
+RegisterServerEvent('ghostdevelopments:notifycops')
+AddEventHandler('ghostdevelopments:notifycops', function(drugToSell)
+    TriggerClientEvent('ghostdevelopments:notifyPolice', -1, drugToSell.coords)
 end)
 
-lib.callback.register('stasiek_selldrugsv2:getPoliceCount', function(source)
+lib.callback.register('ghostdevelopments:getPoliceCount', function(source)
     local count = 0
     local Players = QBCore.Functions.GetQBPlayers()
     for _, v in pairs(Players) do
